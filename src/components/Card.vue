@@ -1,6 +1,5 @@
 <template>
   <div class="card">
-    <div class="card__title">Card</div>
   </div>
 </template>
 
@@ -14,9 +13,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
- .card {
-   &__title {
-     color: red;
-   }
- }
 </style>
