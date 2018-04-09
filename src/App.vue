@@ -23,6 +23,8 @@
 <script>
 import Card from './components/Card'
 import getRandomEmoji from './utils/generateRandomEmoji'
+import double from './utils/doubleArray'
+import shuffle from './utils/shuffleArray'
 
 export default {
   name: 'App',
@@ -38,21 +40,26 @@ export default {
   },
   methods: {
     generateCards () {
-      console.log(this.generateUniqueCardsArray())
-
-      // generate unique cards and double it to create pairs
-      // this.allCards =
-      //   this.generateUniqueCardsArray()
-      //   .concat(this.generateUniqueCardsArray())
+      this.allCards = shuffle(double(this.generateUniqueCardsArray()))
     },
     generateUniqueCardsArray () {
+      // First hald of allCard. Second half is copy of first
       const amountOfUniqueCards = this.getAmountOfCardFromDifficult()
       const uniqueCards = []
+
+      function generateUniqueEmoji (arrayToPush) {
+        const newEmoji = getRandomEmoji()
+        const emojiIsUsed = !!arrayToPush.find(card => card.value === newEmoji)
+
+        return emojiIsUsed
+          ? generateUniqueEmoji(arrayToPush)
+          : newEmoji
+      }
       
       for (let i = 0; i < amountOfUniqueCards; i++) {
         const card = {
           id: i,
-          value: this.generateUniqueEmoji(uniqueCards),
+          value: generateUniqueEmoji(uniqueCards),
           selected: false
         }
         uniqueCards.push(card)
@@ -69,14 +76,6 @@ export default {
         case 'hard': return basicAmount * 4
         case 'insane': return basicAmount * 6
       }
-    },
-    generateUniqueEmoji (arrayToPush) {
-      const newEmoji = getRandomEmoji()
-      const emojiIsUsed = !!arrayToPush.find(card => card.value === newEmoji)
-
-      return emojiIsUsed
-        ? this.generateUniqueEmoji(arrayToPush)
-        : newEmoji
     }
   }
 }
