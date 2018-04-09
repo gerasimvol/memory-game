@@ -38,12 +38,12 @@ export default {
   },
   methods: {
     generateCards () {
-      console.log(getRandomEmoji())
+      console.log(this.generateUniqueCardsArray())
 
       // generate unique cards and double it to create pairs
-      this.allCards =
-        this.generateUniqueCardsArray()
-        .concat(this.generateUniqueCardsArray())
+      // this.allCards =
+      //   this.generateUniqueCardsArray()
+      //   .concat(this.generateUniqueCardsArray())
     },
     generateUniqueCardsArray () {
       const amountOfUniqueCards = this.getAmountOfCardFromDifficult()
@@ -52,7 +52,7 @@ export default {
       for (let i = 0; i < amountOfUniqueCards; i++) {
         const card = {
           id: i,
-          text: i,
+          value: this.generateUniqueEmoji(uniqueCards),
           selected: false
         }
         uniqueCards.push(card)
@@ -69,6 +69,14 @@ export default {
         case 'hard': return basicAmount * 4
         case 'insane': return basicAmount * 6
       }
+    },
+    generateUniqueEmoji (arrayToPush) {
+      const newEmoji = getRandomEmoji()
+      const emojiIsUsed = !!arrayToPush.find(card => card.value === newEmoji)
+
+      return emojiIsUsed
+        ? this.generateUniqueEmoji(arrayToPush)
+        : newEmoji
     }
   }
 }
