@@ -1,3 +1,4 @@
 export default function double(a) {
-  return a.concat(a)
+  const aCopy = a.map(item => Object.assign({}, item))
+  return a.concat(aCopy)
 }
