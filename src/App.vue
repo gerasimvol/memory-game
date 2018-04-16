@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <section class="start-screen">
+      <h1 class="logo">Memory game</h1>
       <div class="difficult">
         <h3>Choose difficult</h3>
         <select v-model="difficult">
@@ -22,6 +23,7 @@
         v-for="(card, i) in allCards"
         :key="`card-${i}`"
         :card="card"
+        :allowSelect="allowSelect"
         :id="i"
         @selected="onCardSelected($event)"
       />
@@ -46,7 +48,8 @@ export default {
       difficultOptions: ['easy', 'normal', 'hard', 'insane'],
       difficult: 'normal',
       allCards: null,
-      selectedCards: []
+      selectedCards: [],
+      allowSelect: true
     }
   },
   methods: {
@@ -103,10 +106,15 @@ export default {
             console.log('GG')
           }
         } else {
-          this.selectedCards.forEach(card => {
-            this.allCards[card.id].selected = false
-          })
-          this.selectedCards = []
+          this.allowSelect = false
+          setTimeout(() => {
+            this.selectedCards.forEach(card => {
+              this.allCards[card.id].selected = false
+            })
+            this.selectedCards = []
+            this.allowSelect = true
+          }, 700)
+          
         }
       }
     }
@@ -116,23 +124,21 @@ export default {
 
 <style lang="scss" scoped>
   #app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    overflow: hidden;
+    font-family: 'Coming Soon', cursive;
     text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
+    height: 100vh;
+    background: var(--blue);
+  }
+
+  .logo {
+    font-weight: 700;
+    font-size: 6rem;
   }
 
   .cards {
     display: flex;
-    max-width: 100vw;
+    max-width: 700px;
     flex-wrap: wrap;
-  }
-
-  .card {
-    &_opened {
-      transform: rotateY(-180deg);
-    }
   }
 </style>

@@ -1,16 +1,10 @@
 <template>
-  <div
-    class="card"
-    @click="selectCard"
-  >
-    <div class="card_front">
-      <div class="card__icon">
-        {{ card.value }}
-      </div>
+  <section class="container" @click="selectCard">
+    <div :class="['card', {'card_flipped': card.selected}]">
+      <div class="card__front"></div>
+      <div class="card__back">{{ card.value }}</div>
     </div>
-
-    <div class="card_back"></div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -27,11 +21,23 @@ export default {
     id: {
       type: Number,
       required: true
+    },
+    allowSelect: {
+      type: Boolean,
+      required: true
+    }
+  },
+  watch: {
+    card: {
+      handler: function(newValue) {
+        this.card = newValue
+      },
+      deep: true
     }
   },
   methods: {
     selectCard () {
-      if(this.card.selected) return
+      if (!this.allowSelect || this.card.selected) return
       this.$emit('selected', {
         card: this.card,
         id: this.id
@@ -42,22 +48,45 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  .container {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    border: 2px solid transparent;
+    perspective: 800px;
+  }
+
   .card {
-    box-sizing: border-box;
-    border: 2px solid lightgray;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    transition: transform 0.5s;
+    transform-style: preserve-3d;
+  }
+
+  .card__front,
+  .card__back {
+    display: flex;
     border-radius: 5px;
-    margin: 10px;
-    padding: 25px;
-    cursor: pointer;
-    transition: all 0.5s;
-    transform: rotateY(180deg);
+    justify-content: center;
+    align-items: center;
+    font-size: 4.8rem;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    backface-visibility: hidden;
+  }
 
-    &_back {
-      background: burlywood;
-    }
+  .card__front {
+    background: var(--black);
+  }
 
-    &__icon {
-      font-size: 3rem;
-    }
+  .card__back {
+      background: var(--white);
+      transform: rotateY( 180deg );
+  }
+
+  .card_flipped {
+      transform: rotateY( 180deg );
   }
 </style>
