@@ -1,7 +1,7 @@
 # memory-game
 
 #### Memory game on vue.js
-Could be problems on Win7 and iOS
+Could be problems on Win7 and iOS<br/>
 [Play here](http://gerasimvol-memory-game.surge.sh/)
 <br/><br/>
 
