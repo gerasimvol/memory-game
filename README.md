@@ -1,21 +1,14 @@
 # memory-game
 
-> 2 cards memory game on VueJS
+#### Memory game on vue.js
 
-## Build Setup
+![Game demo](https://github.com/gerasimvol/memory-game/blob/master/demo.gif)
 
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
+[Play here](http://gerasimvol-memory-game.surge.sh/)
+<br/><br/>
+#### Run local:
 ```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+cd src
+npm i
+npm run dev
+```

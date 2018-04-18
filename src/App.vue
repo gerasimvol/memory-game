@@ -183,6 +183,12 @@ export default {
     font-size: 4.6rem;
     line-height: 4.6rem;
     padding: 50px 0;
+
+    @media screen and (max-width: 1366px) {
+      font-size: 4rem;
+      line-height: 4rem;
+      padding: 20px 0;
+    }
   }
 
   .cards {
@@ -203,6 +209,17 @@ export default {
 
   .cards_hard {
     max-width: 800px;
+
+    @media screen and (max-width: 1366px) {
+      max-width: 1200px;
+    }
+  }
+
+  .cards_insane {
+    @media screen and (max-width: 1366px) {
+      transform: scale(0.8);
+      margin-top: -50px;
+    }
   }
 
   button {
