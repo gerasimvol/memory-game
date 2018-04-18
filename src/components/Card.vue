@@ -62,6 +62,7 @@ export default {
     position: absolute;
     transition: transform 0.5s;
     transform-style: preserve-3d;
+    cursor: pointer;
   }
 
   .card__front,
@@ -70,11 +71,12 @@ export default {
     border-radius: 5px;
     justify-content: center;
     align-items: center;
-    font-size: 4.8rem;
+    font-size: 3.8rem;
     height: 100%;
     width: 100%;
     position: absolute;
     backface-visibility: hidden;
+    padding-top: 8px;
   }
 
   .card__front {

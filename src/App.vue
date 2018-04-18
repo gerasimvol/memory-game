@@ -1,7 +1,12 @@
 <template>
   <div id="app">
-    <section class="start-screen">
-      <h1 class="logo">Memory game</h1>
+    <h1 class="logo">Memory game</h1>
+    <transition name="slide-in" mode="out-in">
+    <section
+      v-if="screen === 'start'"
+      class="start-screen"
+      key="start-screen"
+    >
       <div class="difficult">
         <h3>Choose difficult</h3>
         <select v-model="difficult">
@@ -17,17 +22,38 @@
         Start
       </button>
     </section>
-    <section class="cards" v-if="allCards">
-      <card
-        :class="{'card_opened': card.open}"
-        v-for="(card, i) in allCards"
-        :key="`card-${i}`"
-        :card="card"
-        :allowSelect="allowSelect"
-        :id="i"
-        @selected="onCardSelected($event)"
-      />
+
+    <section
+      v-if="screen === 'game'"
+      key="game-screen"
+    >
+      <button @click="endGame()">
+        Give up!
+      </button>
+      <div :class="[`cards`, `cards_${difficult}`]" v-if="allCards">
+        <card
+          :class="{'card_opened': card.open}"
+          v-for="(card, i) in allCards"
+          :key="`card-${i}`"
+          :card="card"
+          :allowSelect="allowSelect"
+          :id="i"
+          @selected="onCardSelected($event)"
+        />
+      </div>
     </section>
+    </transition>
+
+    <footer class="footer">
+      Made with ❤️ by
+      <a
+        class="author-link"
+        target="_blank"
+        href="https://gerasimvol.github.io/"
+      >
+        gerasimvol
+      </a>
+    </footer>
   </div>
 </template>
 
@@ -45,6 +71,7 @@ export default {
   },
   data () {
     return {
+      screen: 'start', // game
       difficultOptions: ['easy', 'normal', 'hard', 'insane'],
       difficult: 'normal',
       allCards: null,
@@ -56,6 +83,15 @@ export default {
     startNewGame () {
       this.selectedCards = []
       this.allCards = shuffle(double(this.generateUniqueCardsArray()))
+      this.screen = 'game'
+    },
+    endGame () {
+      this.screen = 'start'
+    },
+    winGame () {
+      return confirm('New game?')
+        ? this.endGame()
+        : null
     },
     generateUniqueCardsArray () {
       // First hald of allCard. Second half is copy of first
@@ -100,10 +136,11 @@ export default {
 
       if (this.selectedCards.length === 2) {
         if (this.selectedCards[0].card.value === this.selectedCards[1].card.value) {
-          console.log('PAIR')
           this.selectedCards = []
           if (this.allCards.every(card => card.selected)) {
-            console.log('GG')
+            setTimeout(() => {
+              this.winGame()
+            }, 500)
           }
         } else {
           this.allowSelect = false
@@ -124,21 +161,94 @@ export default {
 
 <style lang="scss" scoped>
   #app {
-    overflow: hidden;
+    position: relative;
     font-family: 'Coming Soon', cursive;
     text-align: center;
-    height: 100vh;
+    min-height: 100vh;
+    height: 100%;
     background: var(--blue);
+    padding-bottom: 50px;
+  }
+
+  .footer {
+    font-weight: bold;
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   .logo {
     font-weight: 700;
-    font-size: 6rem;
+    font-size: 4.6rem;
+    line-height: 4.6rem;
+    padding: 50px 0;
   }
 
   .cards {
     display: flex;
-    max-width: 700px;
     flex-wrap: wrap;
+    justify-content: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .cards_easy {
+    max-width: 400px;
+  }
+
+  .cards_normal {
+    max-width: 600px;
+  }
+
+  .cards_hard {
+    max-width: 800px;
+  }
+
+  button {
+    border: 2px solid var(--white);
+    border-radius: 5px;
+    background: transparent;
+    color: var(--white);
+    font-size: 1.2rem;
+    line-height: 1.2rem;
+    font-family: 'Coming Soon', cursive;
+    font-weight: 700;
+    padding: 0.6rem 2.8rem;
+    padding-top: 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin: 20px 0;
+
+    &:hover {
+      background: var(--white);
+      color: var(--blue);
+    }
+  }
+
+  a {
+    text-decoration: none;
+    color: var(--white);
+  }
+
+  .author-link {
+    padding-left: 3px;
+
+    &:hover {
+      color: var(--red);
+    }
+  }
+
+  .slide-in {
+    &-enter-active,
+    &-leave-active {
+      transition: all .3s ease;
+    }
+
+    &-enter,
+    &-leave-to {
+      transform: translateY(10px);
+      opacity: 0;
+    }
   }
 </style>
