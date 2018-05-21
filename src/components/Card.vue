@@ -62,6 +62,7 @@ export default {
     position: absolute;
     transition: transform 0.5s;
     transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
     cursor: pointer;
   }
 
@@ -76,6 +77,7 @@ export default {
     width: 100%;
     position: absolute;
     backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
     padding-top: 8px;
   }
 
