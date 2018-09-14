@@ -1,7 +1,7 @@
 # memory-game
 
 #### Memory game on vue.js
-##### Device should support emoji (macOS, Win10 ...) <br/>
+##### ⚠ Device should support emoji (macOS, Win10 ...) <br/>
 [Play here](http://gerasimvol-memory-game.surge.sh/)
 <br/><br/>
 
