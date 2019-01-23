@@ -26,6 +26,7 @@
     <section
       v-if="screen === 'game'"
       key="game-screen"
+      class="game-screen"
     >
       <button @click="endGame()">
         Give up!
@@ -168,6 +169,10 @@ export default {
     height: 100%;
     background: var(--blue);
     padding-bottom: 50px;
+  }
+
+  .game-screen {
+    padding-bottom: 20px;
   }
 
   .footer {

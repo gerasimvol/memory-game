@@ -54,6 +54,11 @@ export default {
     position: relative;
     border: 2px solid transparent;
     perspective: 800px;
+
+    @media screen and (max-width: 767px) {
+      width: 50px;
+      height: 50px;
+    }
   }
 
   .card {
@@ -79,6 +84,10 @@ export default {
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
     padding-top: 8px;
+
+    @media screen and (max-width: 767px) {
+      font-size: 2rem;
+    }
   }
 
   .card__front {
